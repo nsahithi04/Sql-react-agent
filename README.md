@@ -11,7 +11,7 @@ You type a question, the agent figures out the SQL, runs it, and gives you the a
 ### 1. Clone the repo
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/nsahithi04/Sql-react-agent
 cd sql-react
 ```
 
