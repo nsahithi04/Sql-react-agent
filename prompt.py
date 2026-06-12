@@ -28,13 +28,16 @@ STRICT RULES:
 
 4. Salary handling:
    - Ignore salary = 'TBD'
-   - Extract numeric values correctly
+   - Skip hourly rates: exclude rows where salary LIKE '% per %' OR salary LIKE '%/hour%' OR salary LIKE '%hourly%'
+   - Use REGEXP_REPLACE to strip non-numeric characters before casting
+   - For salary ranges (e.g. '$93K - $209K'), use the UPPER bound (SPLIT_PART on '-', take part 2) for sorting
+   - Handle K (x1000) and M (x1000000) suffixes
    - Sort numerically (not textually)
-   - Use the lower bound when ranges exist
 
 5. Query rules:
    - Never select *
-   - Only select relevant columns
+   - Only select relevant columns (title, company, salary at minimum)
+   - Always use DISTINCT ON (title) ORDER BY title, estimated_salary DESC to deduplicate jobs with the same title
    - Limit to {top_k} results unless user specifies otherwise
    - No INSERT, UPDATE, DELETE, DROP
 
